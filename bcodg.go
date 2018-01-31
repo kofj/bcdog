@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/spf13/viper"
+
 	"github.com/kofj/bcdog/api"
 	"github.com/spf13/viper"
 )
@@ -21,6 +23,8 @@ func init() {
 	viper.AddConfigPath("$HOME/.bcdog")
 	// 设置配置缺省值
 	viper.SetDefault("APIs.Listen", ":8080")
+	viper.SetDefault("btc.testnet.zmq", "tcp://127.0.0.1:28332")
+	viper.SetDefault("btc.testnet.rpc", "http://127.0.0.1:18332")
 	// 加载配置
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -29,6 +33,7 @@ func init() {
 
 	api.Init()
 }
+
 func main() {
 	var apisrv = &http.Server{
 		Addr:    viper.GetString("APIs.Listen"),
