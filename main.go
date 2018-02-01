@@ -29,6 +29,14 @@ func init() {
 		stdlog.Fatalln("load config error:", err)
 	}
 
+	// 接口文档
+	if docuri := viper.GetString("api.doc"); docuri != "" {
+		var doc = api.Router.Group(docuri)
+		doc.GET("/", api.BinFsHandler("index.html"))
+		doc.GET("/redoc.min.js", api.BinFsHandler("redoc.min.js"))
+		doc.StaticFile("/swagger.json", "swagger.json")
+	}
+
 	api.Init()
 }
 
