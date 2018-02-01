@@ -35,7 +35,7 @@ func init() {
 func main() {
 	var apisrv = &http.Server{
 		Addr:    viper.GetString("api.listen"),
-		Handler: api.Engine,
+		Handler: api.Router,
 	}
 	stdlog.Fatalln(apisrv.ListenAndServe())
 }
